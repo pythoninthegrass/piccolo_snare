@@ -2,14 +2,13 @@ FROM mhart/alpine-node:16
 
 # install dependencies
 WORKDIR /app
-COPY package.json pnpm-lock.yaml ./
-RUN npm install -g pnpm
-RUN pnpm install
+COPY package.json package-lock.json ./
+RUN npm ci
 
 # Copy all local files into the image.
 COPY . .
 
-RUN pnpm build
+RUN npm build
 
 ###
 # Only copy over the Node pieces we need
@@ -22,4 +21,4 @@ COPY --from=0 /app .
 COPY . .
 
 EXPOSE 3000
-CMD ["node", "./build"]
+CMD ["npm", "run", "build"]
