@@ -1,4 +1,5 @@
-from pydantic import BaseSettings
+import os
+from pydantic import BaseSettings, Field
 
 
 class Settings(BaseSettings):
@@ -7,6 +8,7 @@ class Settings(BaseSettings):
     postgres_db: str
     postgres_host: str
     postgres_port: int
+    db_url: str = Field(..., env='DATABASE_URL')
 
     class Config:
         env_file = "../.env"
